@@ -1,0 +1,80 @@
+standalone_question_task:
+  description: >
+    You will receive two inputs:
+      user_query: A potentially incomplete, fragmentary, or context-dependent message from the user.
+      chat_history: A list of previous interactions between the user and assistant.
+
+    Your task is to determine if the user_query is self-contained. 
+    - If it is fully independent and explanatory, return it unchanged.
+    - If it references prior context or lacks clarity on its own, rewrite it using relevant parts of chat_history.
+
+    Ensure:
+      - Preserve the original tone and intent of the user
+      - Avoid ambiguity
+      - Eliminate pronouns and vague references (e.g., “that”, “those”, “it”)
+      - Use formal, direct, and clear phrasing
+      - Avoid over-elaboration
+     
+    Inputs:
+      user_query : {user_query}
+      chat_history : {chat_history}
+
+  expected_output: >
+    A single string: the rewritten standalone question.
+
+faq_task : 
+  description : > 
+    You have the user question (FAQ-style, short and specific) and have the access of RAG Tool.
+
+    Your task is to:
+      Carefully read the retrieved context.
+      Answer the user's question only if the context provides a valid basis.
+      If the answer is not clearly present in the context or context is empty, respond with: "Sorry, I couldn't find the answer to your question in the current documentation."
+      You must never use external knowledge, assumptions, or hallucinations. Your tone should be professional, friendly, and confidence-inspiring.
+
+    User question : "{question}"
+
+  expected_output : >
+    Exact tool output.
+
+demo_redirect_task:
+  description: >
+    You receive short user messages that may indicate interest in a product demo.
+
+    Your task is to:
+      - Identify if the message is about booking, scheduling, or learning more about a demo.
+      - If yes:
+          - Acknowledge their interest politely.
+          - Redirect them to the official demo page.
+          - Include this link in the message:
+            🔗 https://calendly.com/aadityaxalt73/30min?month=2025-06
+          -For other inquiries, please contact our support team."
+
+    User message: "{question}"
+
+  expected_output: >
+    A polite, user-facing message including the correct link when relevant.
+
+route_task : 
+  description : > 
+    You will receive a text input representing a user's message and chat history of user. 
+    Your task is to classify the message into exactly one of the following three categories:
+      "faq" - If the input is a general question, inquiry, or request for information (e.g., "How does your pricing work?").
+      "bookdemo" - If the input includes a request to schedule a product demo or meeting (e.g., "I'd like to book a demo next week.").
+      "invalid_input" - If the input is unrelated, nonsensical, spammy, or cannot be reasonably classified (e.g., "asdfg jkl123").
+
+    Always return only the category label in lowercase string form — no explanation, no summary, and no additional output.
+
+    text input : "{user_query}"
+    chat history : {chat_history}
+
+  expected_output : >
+    A single word string:
+      "faq"
+      "bookdemo"
+      "invalid_input"
+
+    Examples:
+      Input: "Can you tell me more about your features?" → Output: "faq"
+      Input: "I want to book a demo" → Output: "bookdemo"
+      Input: "123@! lorem ipsum test" → Output: "invalid_input"
