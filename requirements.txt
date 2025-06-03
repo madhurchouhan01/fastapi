@@ -31,7 +31,6 @@ dataclasses-json==0.6.7
 decorator==5.2.1
 deprecated==1.2.18
 deprecation==2.1.0
--e file:///C:/Users/hp/Desktop/fastapi/AD
 distro==1.9.0
 docker==7.1.0
 docstring-parser==0.16
