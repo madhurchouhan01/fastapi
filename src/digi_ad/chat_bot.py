@@ -29,7 +29,7 @@ class DigiFlow(Flow[DigiState]):
     @start()
     def stand_alone_question(self):
         self.state.creds["session_id"] = uuid.uuid4().hex
-        self.state.chat_history = get_chat_history(self.state.creds["email"])
+        self.state.chat_history = get_chat_history(self.state.creds["session_id"])
         result = (
             StandAloneCrew()
             .crew()

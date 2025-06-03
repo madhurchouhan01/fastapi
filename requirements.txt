@@ -10,6 +10,12 @@ chromadb==0.5.23
 lancedb==0.21.1
 qdrant-client==1.14.2
 
+
+langchain-cohere>=0.1.0
+faiss-cpu>=1.7.4
+
+
+
 # AI/ML
 openai==1.75.0
 cohere==5.15.0

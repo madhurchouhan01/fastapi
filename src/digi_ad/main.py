@@ -41,11 +41,19 @@
 
 from digi_ad.chat_bot import DigiState, DigiFlow
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Any
 
 app = FastAPI(title="Question Answering API", version="1.0.0")
-
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # In production, specify your frontend domain
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["*"],
+)
 class QuestionRequest(BaseModel):
     name: str
     email: str
